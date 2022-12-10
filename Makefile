@@ -16,9 +16,9 @@ install.dep:
 install.chart:
 	helm install --create-namespace -n thingsboard thingsboard .
 
-.PHONY: update.chart
-update.chart:
-	helm update -n thingsboard thingsboard .
+.PHONY: upgrade.chart
+upgrade.chart:
+	helm upgrade -n thingsboard thingsboard .
 
 .PHONY: uninstall
 uninstall:
