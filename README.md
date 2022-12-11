@@ -5,6 +5,7 @@ This folder contains a helm chart that can be used to deploy Thingsboard on any 
 ## Some examples
 * Simple deployment
 ```
+helm repo add bitnami https://charts.bitnami.com/bitnami
 helm install --create-namespace -n thingsboard thingsboard .
 helm upgrade -n thingsboard thingsboard .
 ```
