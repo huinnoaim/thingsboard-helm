@@ -258,7 +258,7 @@ cassandra:
   # for an postgresql database set cassandra.enabled as false
   # for an hybrid database set cassandra.enabled as true
   enabled: false
-  replicaCount: 1
+  replicaCount: 0
   dbUser:
     password: malboro88
 
@@ -267,16 +267,15 @@ postgresql-ha:
   postgresql:
     database: thingsboard
     replicaCount: 1
+    username: postgres
     password: malboro88
+    repmgrDatabase: repmgr
     repmgrPassword: malboro88
-  postgresqlImage:
-    tag: 12
+    hostNetwork: true
   pgpool:
+    adminUsername: admin
     adminPassword: malboro88
-    replicaCount: 1
-    useLoadBalancing: false
-  pgpoolImage:
-    tag: 4
+    useLoadBalancing: off
 
 redis:
   # Set architecture to either standalone or replication
@@ -290,7 +289,7 @@ redis:
     disableCommands:
       - FLUSHALL
   replica:
-    replicaCount: 0
+    replicaCount: 1
     persistence:
       enabled: false
 
