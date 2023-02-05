@@ -17,7 +17,7 @@
 global:
   image:
     server: docker.io
-    tag: "3.4.0"
+    tag: "3.4.3"
     pullSecrets: []
     pullPolicy: Always
   jsonLogs: false
@@ -37,13 +37,9 @@ serviceAccount:
 ingress:
   enabled: false
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - chart-cdss.local
+  hosts: []
   # Enable or disable tls, same host as above
   tls: false
-
 
 node:
   # kind can be either Deployment or StatefulSet
@@ -60,9 +56,11 @@ node:
     http: 8080
     rpc: 9090
   podAnnotations: {}
-  podSecurityContext: {}
+  podSecurityContext:
+    {}
     # fsGroup: 2000
-  securityContext: {}
+  securityContext:
+    {}
     # capabilities:
     #   drop:
     #   - ALL
@@ -70,9 +68,10 @@ node:
     # runAsNonRoot: true
     # runAsUser: 1000
   service:
-    type: NodePort
+    type: ClusterIP
     port: 8080
-  resources: {}
+  resources:
+    {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -102,7 +101,7 @@ jsexecutor:
     #server: docker.io
     #pullPolicy: Always
     #tag: "X.Y.Z"
-  replicaCount: 5
+  replicaCount: 1
   podAnnotations: {}
   podSecurityContext: {}
   securityContext: {}
@@ -139,7 +138,7 @@ mqtt:
   podSecurityContext: {}
   securityContext: {}
   service:
-    type: NodePort
+    type: LoadBalancer
     port: 8883
   resources: {}
   autoscaling:
@@ -171,7 +170,7 @@ http:
   podSecurityContext: {}
   securityContext: {}
   service:
-    type: NodePort
+    type: ClusterIP
     port: 8082
   resources: {}
   autoscaling:
@@ -193,7 +192,7 @@ coap:
     #server: docker.io
     #pullPolicy: Always
     #tag: "X.Y.Z"
-  replicaCount: 0
+  replicaCount: 1
   port:
     number: 8083
     protocol: UDP
@@ -203,13 +202,13 @@ coap:
   podSecurityContext: {}
   securityContext: {}
   service:
-    type: NodePort
+    type: ClusterIP
     port: 8083
   resources: {}
   autoscaling:
     enabled: false
-    minReplicas: 0
-    maxReplicas: 0
+    minReplicas: 1
+    maxReplicas: 100
     targetCPUUtilizationPercentage: 80
     # targetMemoryUtilizationPercentage: 80
   nodeSelector: {}
@@ -234,7 +233,7 @@ webui:
   podSecurityContext: {}
   securityContext: {}
   service:
-    type: NodePort
+    type: ClusterIP
     port: 8084
   resources: {}
   autoscaling:
@@ -262,31 +261,22 @@ cassandra:
   dbUser:
     password: malboro88
 
-postgresql:
-  ## @param global.postgresql.auth.postgresPassword Password for the "postgres" admin user (overrides `auth.postgresPassword`)
-  ## @param global.postgresql.auth.username Name for a custom user to create (overrides `auth.username`)
-  ## @param global.postgresql.auth.password Password for the custom user to create (overrides `auth.password`)
-  ## @param global.postgresql.auth.database Name for a custom database to create (overrides `auth.database`)
-  ## @param global.postgresql.auth.existingSecret Name of existing secret to use for PostgreSQL credentials (overrides `auth.existingSecret`).
-  ## @param global.postgresql.auth.secretKeys.adminPasswordKey Name of key in existing secret to use for PostgreSQL credentials (overrides `auth.secretKeys.adminPasswordKey`). Only used when `global.postgresql.auth.existingSecret` is set.
-  ## @param global.postgresql.auth.secretKeys.userPasswordKey Name of key in existing secret to use for PostgreSQL credentials (overrides `auth.secretKeys.userPasswordKey`). Only used when `global.postgresql.auth.existingSecret` is set.
-  ## @param global.postgresql.auth.secretKeys.replicationPasswordKey Name of key in existing secret to use for PostgreSQL credentials (overrides `auth.secretKeys.replicationPasswordKey`). Only used when `global.postgresql.auth.existingSecret` is set.
-  ##
-  auth:
-    postgresPassword: "malboro88"
-    username: "postgres"
-    password: "malboro88"
-    database: "thingsboard"
-    existingSecret: ""
-    secretKeys:
-      adminPasswordKey: ""
-      userPasswordKey: ""
-      replicationPasswordKey: ""
-  ## @param global.postgresql.service.ports.postgresql PostgreSQL service port (overrides `service.ports.postgresql`)
-  ##
-  service:
-    ports:
-      postgresql: ""
+postgresql-ha:
+  nameOverride: pg
+  postgresql:
+    database: thingsboard
+    replicaCount: 1
+    password: malboro88
+    repmgrPassword: malboro88
+  postgresqlImage:
+    tag: 14
+  pgpool:
+    adminPassword: malboro88
+    replicaCount: 1
+    useLoadBalancing: false
+    maxPool: 70
+  pgpoolImage:
+    tag: 4
 
 redis:
   # Set architecture to either standalone or replication
