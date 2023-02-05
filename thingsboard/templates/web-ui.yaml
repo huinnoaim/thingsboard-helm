@@ -73,6 +73,10 @@ spec:
             value: "--max-old-space-size=100"
           - name: DOCKER_MODE
             value: "true"
+          - name: TB_HOST
+            value: "{{ .Release.Name }}-node"
+          - name: TB_PORT
+            value: "{{ .Values.node.service.port }}"
           livenessProbe:
             httpGet:
               path: /index.html
