@@ -78,4 +78,3 @@ helm inspect values thingsboard
   * kafka: https://github.com/bitnami/charts/blob/master/bitnami/kafka/values.yaml
   * postgresql-ha: https://github.com/bitnami/charts/blob/master/bitnami/postgresql-ha/values.yaml
   * redis: https://github.com/bitnami/charts/blob/master/bitnami/redis/values.yaml
-
