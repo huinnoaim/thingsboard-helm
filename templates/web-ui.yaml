@@ -62,7 +62,7 @@ spec:
           - name: HTTP_BIND_PORT
             value: "{{ .Values.webui.port.number }}"
           - name: TB_ENABLE_PROXY
-            value: "false"
+            value: "true"
           - name: LOGGER_LEVEL
             value: "info"
           - name: LOG_FOLDER
@@ -73,6 +73,10 @@ spec:
             value: "--max-old-space-size=100"
           - name: DOCKER_MODE
             value: "true"
+          - name: TB_HOST
+            value: "{{ .Release.Name }}-node"
+          - name: TB_PORT
+            value: "{{ .Values.node.service.port }}"
           livenessProbe:
             httpGet:
               path: /index.html

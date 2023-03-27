@@ -30,7 +30,8 @@ spec:
         - name: check-db-ready
           image: postgres:{{ index .Values "postgresql-ha" "postgresqlImage" "tag" }}
           command: ['sh', '-c',
-            'sleep 30']
+            'until pg_isready -h {{ include "thingsboard.pgpoolservicename" . }} -p {{ index .Values "postgresql-ha" "pgpool" "containerPorts" "postgresql" }};
+            do echo waiting for database; sleep 2; done;']
       containers:
       - name: init-db
         envFrom:
