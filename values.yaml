@@ -222,7 +222,7 @@ webui:
     #tag: "X.Y.Z"
   replicaCount: 1
   port:
-    number: 80
+    number: 8084
     protocol: TCP
     name: http
   podAnnotations: {}
@@ -230,7 +230,7 @@ webui:
   securityContext: {}
   service:
     type: LoadBalancer
-    port: 80
+    port: 8084
   resources: {}
   autoscaling:
     enabled: false
