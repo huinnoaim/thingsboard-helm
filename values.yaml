@@ -230,7 +230,7 @@ webui:
   securityContext: {}
   service:
     type: LoadBalancer
-    port: 8084
+    port: 80
   resources: {}
   autoscaling:
     enabled: false
