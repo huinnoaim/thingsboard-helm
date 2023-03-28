@@ -273,6 +273,8 @@ postgresql-ha:
     maxPool: 70
   pgpoolImage:
     tag: 4
+  persistence:
+    size: 100Gi
 
 redis:
   # Set architecture to either standalone or replication
