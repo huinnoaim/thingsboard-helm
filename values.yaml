@@ -261,16 +261,18 @@ postgresql-ha:
   nameOverride: pg
   postgresql:
     database: thingsboard
-    replicaCount: 1
+    replicaCount: 3
     password: pwsetplease
     repmgrPassword: pwsetplease
+    maxConnections: 400
   postgresqlImage:
     tag: 14
   pgpool:
     adminPassword: pwsetplease
     replicaCount: 1
     useLoadBalancing: false
-    maxPool: 70
+    maxPool: 1
+    numInitChildren: 300
   pgpoolImage:
     tag: 4
   persistence:
