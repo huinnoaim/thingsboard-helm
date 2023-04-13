@@ -85,6 +85,8 @@ spec:
             value: "{{ .Release.Name }}-redis-master"
           - name: REDIS_PASSWORD
             value: "{{ .Values.redis.auth.password }}"
+          - name: JWT_TOKEN_EXPIRATION_TIME
+            value: '90000000'
           envFrom:
           - configMapRef:
               name: {{ .Release.Name }}-node-db-config
