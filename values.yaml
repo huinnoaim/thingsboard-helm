@@ -265,16 +265,12 @@ postgresql-ha:
     password: pwsetplease
     repmgrPassword: pwsetplease
     maxConnections: 150
-  postgresqlImage:
-    tag: 14
   pgpool:
     adminPassword: pwsetplease
     replicaCount: 1
     useLoadBalancing: false
     maxPool: 1
     numInitChildren: 100
-  pgpoolImage:
-    tag: 4
   persistence:
     size: 100Gi
 

@@ -28,9 +28,9 @@ spec:
         - name: '{{ .Release.Name }}-container-registry'
       initContainers:
         - name: check-db-ready
-          image: postgres:{{ index .Values "postgresql-ha" "postgresqlImage" "tag" }}
+          image: bitnami/postgresql:{{ index .Values "postgresql-ha" "postgresql" "image" "tag" }}
           command: ['sh', '-c',
-            'until pg_isready -h {{ include "thingsboard.pgpoolservicename" . }} -p {{ index .Values "postgresql-ha" "pgpool" "containerPorts" "postgresql" }};
+            'until pg_isready -h {{ include "thingsboard.pgpoolservicename" . }} -p {{ index .Values "postgresql-ha" "pgpool" "containerPorts" "postgresql" }} -U {{ index .Values "postgresql-ha" "postgresql" "username"}};
             do echo waiting for database; sleep 2; done;']
       containers:
       - name: init-db
