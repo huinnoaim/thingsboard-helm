@@ -17,13 +17,13 @@
 global:
   image:
     server: docker.io
-    tag: "3.4.3"
+    tag: '3.4.3'
     pullSecrets: []
     pullPolicy: Always
   jsonLogs: false
 
-nameOverride: ""
-fullnameOverride: ""
+nameOverride: ''
+fullnameOverride: ''
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -32,7 +32,7 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: ""
+  name: ''
 
 ingress:
   enabled: false
@@ -261,7 +261,7 @@ postgresql-ha:
   nameOverride: pg
   postgresql:
     database: thingsboard
-    replicaCount: 3
+    replicaCount: 1
     password: pwsetplease
     repmgrPassword: pwsetplease
     maxConnections: 150
